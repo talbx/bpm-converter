@@ -1,26 +1,41 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, {useState} from 'react';
 import './App.css';
+import 'semantic-ui-css/semantic.min.css'
+import {Button, Container, GridColumn, GridRow, Header, Input, Statistic} from 'semantic-ui-react'
+import {Tempo} from "./Tempo";
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+
+    const tempo = new Tempo(123);
+    const convert = () => {
+        toggleConverted(!isConverted);
+    }
+    const [isConverted,toggleConverted] = useState(false);
+    return (
+        <Container>
+            <GridColumn>
+                <GridRow style={{margin: "5%"}}>
+                    <Input
+                        label={{ basic: true, content: 'BPM' }}
+                        labelPosition='right'
+                        placeholder='Enter beats per minute'
+
+                    />
+                    <Button onClick={() => convert()}>Convert</Button>
+                    {
+                        isConverted &&
+                        <Statistic>
+                            <Statistic.Value>{tempo.bpm}</Statistic.Value>
+                            <Statistic.Label>BPM</Statistic.Label>
+                        </Statistic>
+                    }
+                </GridRow>
+            </GridColumn>
+            <Header as='h1'>Convert BPM to ms</Header>
+        </Container>
+    );
 }
+
+
 
 export default App;
