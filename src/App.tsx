@@ -1,11 +1,12 @@
 import React, {useState} from 'react';
 import './App.css';
 import 'semantic-ui-css/semantic.min.css'
-import {Container, Grid, Input} from 'semantic-ui-react'
+import {Card, Container, Grid, Input} from 'semantic-ui-react'
 import {Tempo} from "./Tempo";
-import {Provider} from "react-redux";
-import {store} from "./store";
+import {Provider, useDispatch, useSelector} from "react-redux";
+import {BpmConverterState, store} from "./store";
 import {HeaderComponent} from "./header.component";
+import {Actions} from "./Actions";
 
 function App() {
 
@@ -17,46 +18,59 @@ function App() {
     const [error, setError] = useState(false);
     const value = 1;
     const [isConverted, toggleConverted] = useState(false);
+    const bpm = useSelector((state: BpmConverterState) => state.bpm)
+    const dispatch = useDispatch();
 
     function update(value: string) {
         console.log(value);
         if (value) {
-            console.log(value.length, "length")
-            if (value.length < 4 && value.length > 1) {
-                /^\d+$/.test(value) ? setError(false) : setError(true)
-            }
+            /^\d+$/.test(value) ? setError(false) : setError(true)
+            dispatch({
+                type: Actions.BPM_CHANGED,
+                payload: value
+            });
         } else {
             setError(false)
         }
     }
 
     return (
-        <Provider store={store}>
+        <div>
             <HeaderComponent/>
             <Container fluid={true}>
-                <Grid centered columns={3}>
+                <Grid columns={3}>
                     <Grid.Column>
                         <div/>
 
                     </Grid.Column>
                     <Grid.Column>
-                        <Input centered
-                               style={{"marginTop": "33%"}}
-                               size={"massive"}
-                               label={{basic: true, content: 'BPM'}}
-                               type={"digits"}
-                               error={error}
-                               onChange={event => update(event.target.value)}
-                               labelPosition='right'
-                               placeholder='Enter BPM...'
+                        <Input
+                            style={{"marginTop": "33%"}}
+                            size={"massive"}
+                            label={{basic: true, content: 'BPM'}}
+                            type={"digits"}
+                            error={error}
+                            onChange={event => update(event.target.value)}
+                            labelPosition='right'
+                            placeholder='Enter BPM...'
                         />
+
+
                     </Grid.Column>
                     <Grid.Column>
                         <div/>
                     </Grid.Column>
                 </Grid>
+                {
+                    bpm > 0 &&
+
+                    <Card centered={true}
+                    size={"huge"}>
+                        <p>hallo</p>
+                    </Card>
+                }
             </Container>
-        </Provider>
+        </div>
     );
 }
 

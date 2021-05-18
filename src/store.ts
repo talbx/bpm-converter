@@ -14,7 +14,7 @@ const rootReducer = (state = initialState, action: any) => {
     console.log("some action appeared", action);
     switch (action.type) {
         case Actions.BPM_CHANGED:
-            return newState({...state, config: action.payload});
+            return newState({...state, bpm: action.payload});
         default:
             return state;
     }
