@@ -1,5 +1,4 @@
 import React, {useState} from 'react';
-import './App.css';
 import 'semantic-ui-css/semantic.min.css'
 import {Container, Header, Input, Table} from 'semantic-ui-react'
 import {useDispatch, useSelector} from "react-redux";
