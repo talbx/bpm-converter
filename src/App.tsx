@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import './App.css';
 import 'semantic-ui-css/semantic.min.css'
-import {Card, Container, Grid, Input} from 'semantic-ui-react'
+import {Card, Container, Grid, Input, Table} from 'semantic-ui-react'
 import {Tempo} from "./Tempo";
 import {Provider, useDispatch, useSelector} from "react-redux";
 import {BpmConverterState, store} from "./store";
@@ -18,7 +18,7 @@ function App() {
     const [error, setError] = useState(false);
     const value = 1;
     const [isConverted, toggleConverted] = useState(false);
-    const bpm = useSelector((state: BpmConverterState) => state.bpm)
+    const state = useSelector((state: BpmConverterState) => state)
     const dispatch = useDispatch();
 
     function update(value: string) {
@@ -61,14 +61,40 @@ function App() {
                         <div/>
                     </Grid.Column>
                 </Grid>
-                {
-                    bpm > 0 &&
+                <Grid columns={1}
+                      centered={true}>
+                    {
+                        state.bpm > 0 &&
 
-                    <Card centered={true}
-                    size={"huge"}>
-                        <p>hallo</p>
-                    </Card>
-                }
+                        <Container size={"huge"}>
+                            <Table style={{"marginTop": "3%"}} basic="very">
+                                <Table.Header>
+                                    <Table.Row>
+                                        <Table.HeaderCell as={"h3"}>Tempo</Table.HeaderCell>
+                                        <Table.HeaderCell>1/4</Table.HeaderCell>
+                                        <Table.HeaderCell>1/8</Table.HeaderCell>
+                                        <Table.HeaderCell>1/8T</Table.HeaderCell>
+                                        <Table.HeaderCell>1/16</Table.HeaderCell>
+                                        <Table.HeaderCell>1/16T</Table.HeaderCell>
+                                        <Table.HeaderCell>1/32</Table.HeaderCell>
+                                    </Table.Row>
+                                </Table.Header>
+
+                                <Table.Body>
+                                    <Table.Row>
+                                        <Table.Cell>{state.bpm}</Table.Cell>
+                                        <Table.Cell>{Math.round(state.conversion?.quarterMs)}</Table.Cell>
+                                        <Table.Cell>{Math.round(state.conversion?.eighthMs)}</Table.Cell>
+                                        <Table.Cell>{Math.round(state.conversion?.eightsTripletMs)}</Table.Cell>
+                                        <Table.Cell>{Math.round(state.conversion?.sixteenth)}</Table.Cell>
+                                        <Table.Cell>{Math.round(state.conversion?.sixteenthsTripletMs)}</Table.Cell>
+                                        <Table.Cell>{Math.round(state.conversion?.demisemiquaverMs)}</Table.Cell>
+                                    </Table.Row>
+                                </Table.Body>
+                            </Table>
+                        </Container>
+                    }
+                </Grid>
             </Container>
         </div>
     );
