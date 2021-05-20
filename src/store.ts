@@ -7,9 +7,7 @@ const initialState: BpmConverterState = {
         quarterMs: 0,
         eighthMs: 0,
         sixteenth: 0,
-        demisemiquaverMs: 0,
         eightsTripletMs: 0,
-        sixteenthsTripletMs: 0
     }
 }
 
@@ -17,9 +15,7 @@ export interface Conversion {
     quarterMs: number;
     eighthMs: number;
     sixteenth: number;
-    demisemiquaverMs: number;
     eightsTripletMs: number;
-    sixteenthsTripletMs: number
 }
 
 export interface BpmConverterState {
@@ -32,15 +28,12 @@ function calculateConversion(bpm: number): Conversion {
     const quarterMs = 60000 / bpm;
     const eightMs = quarterMs / 2;
     const sixteenthMs = eightMs / 2;
-    const demisemiquaverMs = sixteenthMs / 2;
     const eigthsTripletsMs = quarterMs / 3;
     return {
         quarterMs: quarterMs,
         eighthMs: eightMs,
         sixteenth: sixteenthMs,
-        demisemiquaverMs: demisemiquaverMs,
         eightsTripletMs: eigthsTripletsMs,
-        sixteenthsTripletMs: 0
     }
 }
 
