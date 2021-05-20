@@ -1,7 +1,6 @@
 {
   "name": "bpm-converter",
-  "version": "0.1.0",
-  "private": true,
+  "version": "1.0.0",
   "license": "UNLICENSED",
   "homepage": "http://talbx.github.io/bpm-converter",
   "dependencies": {
